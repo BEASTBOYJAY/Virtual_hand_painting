@@ -1,6 +1,5 @@
 import cv2
 import mediapipe
-import time
 
 
 class HandDetector:
