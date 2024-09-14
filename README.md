@@ -9,6 +9,7 @@ Virtual Paint is an interactive application that enables users to create digital
 - Overlay images for color and tool selection.
 - Real-time drawing on a virtual canvas.
 - FPS (Frames Per Second) display for performance monitoring.
+- New: now the brush size will change according to the hand distance 
 
 ## Components
 

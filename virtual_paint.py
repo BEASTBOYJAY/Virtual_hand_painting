@@ -3,6 +3,37 @@ import os
 import numpy as np
 import time
 from Hand_traking_module import HandDetector
+import math
+
+from pprint import pp
+
+
+class HandDistance:
+    def FindDistance(lmlist):
+        x1 = lmlist[5][1]
+        y1 = lmlist[5][2]
+        x2 = lmlist[17][1]
+        y2 = lmlist[17][2]
+
+        distance = math.sqrt((y2 - y1) ** 2 + (x2 - x1) ** 2)
+        return distance
+
+    def Find_BrushSize(distance):
+        brush_size = 8  # Default brush size in case no condition is met
+        if distance > 170:
+            brush_size = 20
+        elif 170 >= distance > 140:
+            brush_size = 15
+        elif 140 >= distance > 100:
+            brush_size = 10
+        elif 100 >= distance > 70:
+            brush_size = 8
+        elif 70 >= distance > 50:
+            brush_size = 4
+        elif distance <= 50:
+            brush_size = 2
+
+        return brush_size
 
 
 class VirtualPainter:
@@ -109,6 +140,10 @@ class VirtualPainter:
                 cv2.rectangle(
                     img, (x1, y1 - 25), (x2, y2 + 25), self.drawing_color, cv2.FILLED
                 )
+
+            # Find distance of the of hand for the brush size
+            hand_distance = HandDistance.FindDistance(lmlist=lmlist)
+            self.brush_size = HandDistance.Find_BrushSize(distance=hand_distance)
 
             # If Drawing mode - 1 finger is up
             if fingers[1] and not fingers[2]:
